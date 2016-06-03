@@ -29,7 +29,7 @@ namespace Craps
 
         //declaring class variables for end game statistics
         static float averageNoOfRollsPerGame = 0;
-        static List< int> noOfRollsPerGame = new List<int>();
+        static List<int> noOfRollsPerGame = new List<int>();
         static int highestNoOfRolls = 1;
         static int lowestNoOfRolls = 0;
         static int mostCommonRoll = 0;
@@ -72,7 +72,9 @@ namespace Craps
                 numberOfGames = Int32.Parse(Console.ReadLine());
 
                 if (numberOfGames <= 0)
+                {
                     NumberofGamesEntryError();
+                }
                 else
                 {
                     PlayGame(numberOfGames);
@@ -80,7 +82,10 @@ namespace Craps
                     Console.WriteLine("Press 'y' to continue playing");
                     continueGame = Console.ReadLine();
                     if (continueGame == "y" || continueGame == "Y")
+                    {
+                        ClearVariableValuesForNewGame();
                         DisplayIntro();
+                    }
                     else
                     {
                         Console.WriteLine("Exiting.");
@@ -118,14 +123,13 @@ namespace Craps
             for (int i = 0; i < numberOfGames; i++)
             {
                 //a blank line for display purposes
-                Console.WriteLine(); 
+                Console.WriteLine();
 
                 dice1 = RollDice();
                 dice2 = RollDice();
 
-                Console.WriteLine("For round " + (i + 1) + ", the first dice has the value: " + dice1 + ", and the second dice has the value: " + dice2 +".");
-                // sum of dice values
-                sum = dice1 + dice2; 
+                Console.WriteLine("For round " + (i + 1) + ", the first dice has the value: " + dice1 + ", and the second dice has the value: " + dice2 + ".");
+                sum = dice1 + dice2;
                 Console.WriteLine("This gives the sum of: " + sum);
 
                 //deal with statistical data for the end of the game
@@ -136,7 +140,7 @@ namespace Craps
                 ProcessDiceResults(sum);
 
                 //display purposes
-               Console.WriteLine();
+                Console.WriteLine();
             }
             DisplayEndGameStatistics();
         }
@@ -181,7 +185,7 @@ namespace Craps
             int roundsCounter = 1;
             Boolean matchfound = false;
 
-            Console.WriteLine("Commencing points round: Rolling again as the Shooter wins the round if the dice sum matches the points value " + sum  + " before a 7 is rolled. Otherwise, the shooter loses.");
+            Console.WriteLine("Commencing points round: Rolling again as the Shooter wins the round if the dice sum matches the points value " + sum + " before a 7 is rolled. Otherwise, the shooter loses.");
             Console.WriteLine("");
 
             while (matchfound == false)
@@ -191,7 +195,7 @@ namespace Craps
                 dice2 = RollDice();
                 Console.WriteLine("Points round: The first dice has the value: " + dice1 + " and the second dice has the value: " + dice2 + ".");
 
-                pointSum = dice1 + dice2; 
+                pointSum = dice1 + dice2;
                 if (pointSum == 7)
                 {
                     Console.WriteLine("This gives the sum of: " + pointSum);
@@ -209,14 +213,26 @@ namespace Craps
                 Console.ReadLine();
 
                 //collect and manipulate data for end of game statistics
-                roundsCounter++;  
+                roundsCounter++;
             }
 
             //manipulate data for end of game statistics
             StatisticalPointsAnalysis(roundsCounter);
             MostCommonRoll(pointSum);
         }
+        public static void ClearVariableValuesForNewGame()
+        {
+            averageNoOfRollsPerGame = 0;
+            List<int> noOfRollsPerGame = new List<int>();
+            highestNoOfRolls = 1;
+            lowestNoOfRolls = 0;
+            mostCommonRoll = 0;
+            List<int> sumOfEachRoll = new List<int>();
+            averageWinningPercentage = 0;
+            noOfWins = 0;
+            noOfLosses = 0;
 
+        }
         static int RollDice()
         {
             int dice = 0;
@@ -227,9 +243,9 @@ namespace Craps
         /***********statistics section methods**************/
         static void StatisticalSumAnalysis(int Sum)
         {
+            LowestNoOfRolls(1);
             if ((Sum < 4 & Sum > 10) || Sum == 7)
             {
-                LowestNoOfRolls(1);
                 AverageNumberOfRollsPerGame(1);
             }
         }
@@ -251,19 +267,25 @@ namespace Craps
         }
         static void LowestNoOfRolls(int Rounds)
         {
-            //If rounds == 1, then is not a points round, and will be the lowest no of rolls
-            if (Rounds == 1)
-                lowestNoOfRolls = 1;
+            //If rounds == 1, then it is not a points round, and will be the lowest no of rolls
             //else, it is a points round, so set lowestNoOfRounds if appropriate
+            if (Rounds == 1)
+            {
+                lowestNoOfRolls = 1;
+            }
             else if (lowestNoOfRolls > Rounds)
+            {
                 lowestNoOfRolls = Rounds;
+            }
             else if (lowestNoOfRolls == 0)
+            {
                 lowestNoOfRolls = Rounds;
+            }
 
         }
         static void MostCommonRoll(int Sum)
         {
-            //this methods finds the lowest number in the list that are in common ie. if you have {2, 2, 3, 3} it will only display '2'.
+            //this methods finds the lowest (common) number in the list ie. if you have {2, 2, 3, 3}, or {2, 3, 4, 5} it will only display '2'.
             sumOfEachRoll.Add(Sum);
             mostCommonRoll = (from i in sumOfEachRoll
                         group i by i into grp
