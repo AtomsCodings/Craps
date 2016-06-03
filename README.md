@@ -17,6 +17,8 @@ When finished, tell the user:
 - the number of losses
 
 How to play craps:
-Each game the 'shooter' rolls two dice.  If the numbers on the dice add up to 2, 3 or 12, the shooter loses.
-If the numbers on the dice add up to 4, 5, 6, 8, 9, or 10, that sets the 'points', the shooter continues to roll until the number
+Each game the 'shooter' rolls two dice.  
+If the numbers on the dice add up to 2, 3 or 12, the shooter loses.
+If the numbers on the dice add up to 7 or 11, the shooter wins.
+If the numbers on the dice add up to 4, 5, 6, 8, 9, or 10, that sets the 'points', and the shooter continues to roll until the number
 match the points then the shooter wins, of if a 7 is rolled, the shooter loses."
